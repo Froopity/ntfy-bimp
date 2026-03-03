@@ -1,0 +1,15 @@
+[Unit]
+Description=Beets Remote Importer via ntfy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=<your-user>
+ExecStart=/opt/ntfy-bimp/.venv/bin/python -m ntfy_bimp.main
+WorkingDirectory=/opt/ntfy-bimp
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

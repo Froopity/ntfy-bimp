@@ -1,0 +1,12 @@
+# Config (contains secrets)
+config.yaml
+
+# Virtual environment
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log

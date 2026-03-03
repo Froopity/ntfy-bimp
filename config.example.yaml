@@ -1,0 +1,5 @@
+ntfy_url: "https://ntfy.sh"
+topic: "my_secret_beets_topic_abc123"
+token: "tk_xxxxxxxxxxxxxxxx"   # Bearer token (optional; omit or leave blank for no auth)
+import_path: "/mnt/external_storage/data/slskd/downloads"
+char_limit: 4000               # ntfy message size safety limit
