@@ -110,6 +110,9 @@ def main() -> None:
 
     for event in subscribe(cfg):
         raw = event.get("message", "").strip()
+        if "server" in event.get("tags", []):
+            log.debug("Ignoring own message: %r", raw)
+            continue
         cmd = raw.upper()
         log.info("Received: %r → command %r", raw, cmd)
         handle_message(cmd, bridge, lib, cfg)

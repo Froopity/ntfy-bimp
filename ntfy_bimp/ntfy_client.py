@@ -33,6 +33,7 @@ def publish(message, title=None, priority=None, *, config):
     url = f"{config['ntfy_url']}/{config['topic']}"
     headers = _auth_headers(config)
     headers["Content-Type"] = "text/plain"
+    headers["Tags"] = "server"
     if title:
         headers["Title"] = title
     if priority:
