@@ -8,6 +8,9 @@ log = logging.getLogger(__name__)
 
 _BACKOFF_BASE = 2
 _BACKOFF_MAX = 60
+_PUBLISH_COOLDOWN = 1.0  # seconds between outgoing messages
+
+_last_publish: float = 0.0
 
 
 def _auth_headers(config):
@@ -26,6 +29,11 @@ def publish(message, title=None, priority=None, *, config):
         priority: Optional ntfy priority string (e.g. "high").
         config: Config dict from load_config().
     """
+    global _last_publish
+    elapsed = time.monotonic() - _last_publish
+    if elapsed < _PUBLISH_COOLDOWN:
+        time.sleep(_PUBLISH_COOLDOWN - elapsed)
+
     char_limit = config.get("char_limit", 4000)
     if len(message) > char_limit:
         message = message[: char_limit - 3] + "..."
@@ -40,6 +48,7 @@ def publish(message, title=None, priority=None, *, config):
         headers["Priority"] = priority
 
     resp = requests.post(url, data=message.encode(), headers=headers, timeout=15)
+    _last_publish = time.monotonic()
     resp.raise_for_status()
 
 
