@@ -6,6 +6,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=<your-user>
+Environment=HOME=/home/<your-user>
 ExecStart=/opt/ntfy-bimp/.venv/bin/python -m ntfy_bimp.main
 WorkingDirectory=/opt/ntfy-bimp
 Restart=on-failure
