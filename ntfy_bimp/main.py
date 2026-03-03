@@ -16,6 +16,7 @@ import traceback
 
 import beets
 import beets.library
+import beets.plugins
 import beets.ui
 
 from .bridge import NtfyBridge, NtfyImportSession
@@ -99,8 +100,10 @@ def main() -> None:
     # Initialise beets from its own config file (reads ~/.config/beets/config.yaml
     # or wherever BEETSDIR points).
     beets.config.read()
+    beets.plugins.load_plugins()
 
     lib = beets.ui._open_library(beets.config)
+    beets.plugins.send("library_opened", lib=lib)
     log.info("Opened beets library: %s", lib.path)
 
     bridge = NtfyBridge(config=cfg)
